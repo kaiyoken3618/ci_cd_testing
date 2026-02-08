@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    triggers {
+       // Poll GitHub every 5 minutes
+        pollSCM('H/5 * * * *')
+    }
+
     environment {
         IMAGE_NAME = "kai3618/ci-cd-test"
         IMAGE_TAG  = "latest"
