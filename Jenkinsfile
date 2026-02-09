@@ -23,7 +23,10 @@ pipeline {
 
         stage('Build with Maven') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                sh '''
+                    chmod +x mvnw
+                    ./mvnw clean package -DskipTests
+                '''
             }
         }
 
@@ -31,7 +34,7 @@ pipeline {
             steps {
                 withSonarQubeEnv("${SONARQUBE_ENV}") {
                     sh '''
-                    mvn sonar:sonar \
+                    ./mvnw sonar:sonar \
                       -Dsonar.projectKey=ci-cd-test \
                       -Dsonar.projectName=ci-cd-test
                     '''
