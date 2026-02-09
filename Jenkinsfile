@@ -20,20 +20,11 @@ pipeline {
                     url: 'https://github.com/kaiyoken3618/ci_cd_testing.git'
             }
         }
-
-        stage('Build with Maven') {
-            steps {
-                sh '''
-                    chmod +x mvnw
-                    ./mvnw clean package -DskipTests
-                '''
-            }
-        }
-
         stage('SonarQube Scan') {
             steps {
                 withSonarQubeEnv("${SONARQUBE_ENV}") {
                     sh '''
+                    chmod +x mvnw
                     ./mvnw sonar:sonar \
                       -Dsonar.projectKey=ci-cd-test \
                       -Dsonar.projectName=ci-cd-test
